@@ -208,3 +208,11 @@ class Focus(nn.Module):
             dim=1,
         )
         return self.conv(x)
+
+class FocusReplace(nn.Module):
+    def __init__(self, in_channels, out_channels, ksize=6, stride=2, act="silu"):
+        super().__init__()
+        self.conv = BaseConv(in_channels, out_channels, ksize, stride, act=act)
+
+    def forward(self, x):
+        return self.conv(x)

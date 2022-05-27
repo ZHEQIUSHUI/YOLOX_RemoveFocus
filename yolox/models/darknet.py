@@ -4,7 +4,7 @@
 
 from torch import nn
 
-from .network_blocks import BaseConv, CSPLayer, DWConv, Focus, ResLayer, SPPBottleneck
+from .network_blocks import BaseConv, CSPLayer, DWConv, Focus, FocusReplace, ResLayer, SPPBottleneck
 
 
 class Darknet(nn.Module):
@@ -112,7 +112,7 @@ class CSPDarknet(nn.Module):
         base_depth = max(round(dep_mul * 3), 1)  # 3
 
         # stem
-        self.stem = Focus(3, base_channels, ksize=3, act=act)
+        self.stem = FocusReplace(3, base_channels, ksize=6, stride=2, act=act)
 
         # dark2
         self.dark2 = nn.Sequential(
